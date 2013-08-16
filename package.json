@@ -1,0 +1,27 @@
+{
+  "name": "e-json",
+  "version": "0.0.0",
+  "description": "EJSON - Extended and Extensible JSON library from Meteor",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha $(find test -name '*.test.js')"
+  },
+  "keywords": [
+    "EJSON",
+    "JSON",
+    "Extended",
+    "Extensible",
+    "Meteor"
+  ],
+  "author": "Arnout Kazemier",
+  "license": "MIT",
+  "dependencies": {
+    "load": "0.1.x",
+    "underscore": "1.5.x"
+  },
+  "devDependencies": {
+    "mocha": "1.12.x",
+    "chai": "1.7.x",
+    "pre-commit": "0.0.x"
+  }
+}
