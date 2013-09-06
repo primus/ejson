@@ -17,7 +17,7 @@ var source = [
   // a.k.a. writing bad code in general. These variable declarations ensure that
   // we don't have horrible global leaks in our own code.
   //
-  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = this;',
+  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = {};',
 
   //
   // Add the required dependencies and include them as full source so we can
@@ -28,7 +28,7 @@ var source = [
   fs.readFileSync(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
   fs.readFileSync(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
 
-  '  root.EJSON = EJSON;',
+  '  this.EJSON = EJSON;',
   '}).call(this);'
 ].join('\n');
 
@@ -45,7 +45,7 @@ var EJSON = load.compiler(source, 'EJSON.js', {
   Date: Date,               // Used for instanceof check in ejson.js
   undefined: undefined,
   null: null
-}).EJSON;
+});
 
 //
 // Expose the source code.
