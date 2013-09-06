@@ -17,7 +17,7 @@ var source = [
   // a.k.a. writing bad code in general. These variable declarations ensure that
   // we don't have horrible global leaks in our own code.
   //
-  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = {};',
+  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = this;',
 
   //
   // Add the required dependencies and include them as full source so we can
@@ -43,7 +43,9 @@ var EJSON = load.compiler(source, 'EJSON.js', {
   Uint8Array: Uint8Array,   // Used for instanceof check in ejson.js
   Array: Array,             // Used for instanceof check in ejson.js
   Date: Date,               // Used for instanceof check in ejson.js
-});
+  undefined: undefined,
+  null: null
+}).EJSON;
 
 //
 // Expose the source code.

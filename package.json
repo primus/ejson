@@ -1,7 +1,7 @@
 {
   "name": "e-json",
-  "version": "0.0.0",
-  "description": "EJSON - Extended and Extensible JSON library from Meteor",
+  "version": "0.0.1",
+  "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Primus",
   "main": "index.js",
   "scripts": {
     "test": "mocha $(find test -name '*.test.js')"
@@ -11,9 +11,14 @@
     "JSON",
     "Extended",
     "Extensible",
-    "Meteor"
+    "Meteor",
+    "primus"
   ],
   "author": "Arnout Kazemier",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/primus/EJSON.git"
+  },
   "license": "MIT",
   "dependencies": {
     "load": "0.1.x",
