@@ -9,7 +9,7 @@ var load = require('load')
 // full source of the EJSON source.
 //
 var source = [
-  ';(function () {',
+  ';var EJSON = (function () {',
   '"use strict";',
 
   //
@@ -28,7 +28,7 @@ var source = [
   fs.readFileSync(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
   fs.readFileSync(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
 
-  '  this.EJSON = EJSON;',
+  '  return EJSON;',
   '}).call(this);'
 ].join('\n');
 
@@ -46,6 +46,8 @@ var EJSON = load.compiler(source, 'EJSON.js', {
   undefined: undefined,
   null: null
 });
+
+if (EJSON.EJSON) EJSON = EJSON.EJSON;
 
 //
 // Expose the source code.
