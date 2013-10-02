@@ -1,6 +1,6 @@
 {
   "name": "e-json",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Primus",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "load": "0.1.x",
+    "load": "1.0.x",
     "underscore": "1.5.x"
   },
   "devDependencies": {
