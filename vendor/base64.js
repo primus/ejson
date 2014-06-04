@@ -1,4 +1,5 @@
 // Base 64 encoding
+
 var BASE_64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 var BASE_64_VALS = {};
