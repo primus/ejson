@@ -4,7 +4,8 @@
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Primus",
   "main": "index.js",
   "scripts": {
-    "test": "mocha $(find test -name '*.test.js')"
+    "prepublish": "node build.js",
+    "test": "npm run prepublish && mocha"
   },
   "keywords": [
     "EJSON",
