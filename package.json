@@ -22,7 +22,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "load": "1.0.x",
     "underscore": "1.5.x"
   },
   "devDependencies": {
