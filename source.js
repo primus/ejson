@@ -4,26 +4,28 @@ var read = require('fs').readFileSync
   , path = require('path');
 
 //
-// Create a browser stable version of underscore so it can be included in the
-// source of the EJSON library.
+// Expose a custom build which only uses globals instead of browserify.
 //
-var _ = read(require.resolve('underscore'), 'utf-8').slice(0, -7) + 'root);';
+module.exports = [
+  ';var EJSON = (function () {',
+  '"use strict";',
 
-//
-// Remove the module.exports of the EJSON library which has been browserified.
-//
-var EJSON = read(path.join(__dirname, 'index.js'), 'utf-8').slice(16);
+  //
+  // EJSON and meteor has a horrible habit of introducing pointless globals
+  // a.k.a. writing bad code in general. These variable declarations ensure that
+  // we don't have horrible global leaks in our own code.
+  //
+  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = {};',
 
-//
-// Remove the require statement for underscore and replace it with the full
-// source of the library.
-//
-EJSON = EJSON.replace(/var\s\_\s=\srequire\(\"underscore\"\);/, [
-  _,
-  'var _ = "undefined" !== typeof exports ? exports._ : root._;'
-].join(''));
+  //
+  // Add the required dependencies and include them as full source so we can
+  // re-use this code for Node.js as well as on the client.
+  //
+  read(require.resolve('underscore'), 'utf-8').slice(0, -7) + 'root);',
+  'var _ = "undefined" !== typeof exports ? exports._ : root._;',
+  read(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
+  read(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
 
-//
-// Force a global variable and expose the string.
-//
-module.exports = ';var EJSON = '+ EJSON;
+  '  return EJSON;',
+  '}).call(this);'
+].join('\n');
