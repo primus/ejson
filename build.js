@@ -26,4 +26,4 @@ var source = [
   '}).call(this);'
 ].join('\n');
 
-fs.writeFileSync(__dirname + '/ejson.js', source);
+fs.writeFileSync(__dirname + '/index.js', source);
