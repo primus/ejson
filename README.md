@@ -1,10 +1,29 @@
-# e-json, because EJSON was already taken in npm
+# ejson
 
 [![Build Status](https://travis-ci.org/primus/EJSON.png)](https://travis-ci.org/primus/EJSON)
 [![NPM version](https://badge.fury.io/js/e-json.png)](http://badge.fury.io/js/e-json)
 
-`e-json` is [Meteor EJSON](http://docs.meteor.com/#ejson) parser made compatible for Node.js and regular browser
-clients. This allows use for real-time systems such as [Primus](https://github.com/primus/primus).
+`ejson` is an extension of JSON to support more types. It supports all JSON-safe
+types as well as
+
+- **Date**: It maintains a date instance instead of transforming it to a string.
+- **Binary**: `Uinit8Array`
+- **User defined types**
+
+The `ejson` module is port of Meteor's EJSON parser which has been made
+compatible for Node.js and browsers. This way, other 
+[real-time libraries](https://github.com/primus/primus) can also make use of
+these extensions. 
+
+## Installation
+
+The module is released through npm:
+
+```js
+npm install --save ejson
+```
+
+## Usage
 
 The API is exactly the same as the API that Meteor provides as it uses exactly
 the same code. The most important API's are:
@@ -21,6 +40,9 @@ And some utility methods:
 - `EJSON.newBinary`
 - `EJSON.equals`
 
-### License
+See the [meteor EJSON documentation](http://docs.meteor.com/#ejson) for more
+detailed information.
+
+## License
 
 This module is licensed under MIT. Same as Meteor.js is.
