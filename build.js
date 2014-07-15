@@ -12,6 +12,13 @@ var source = [
   '"use strict";',
 
   //
+  // Add a Meteor stub, when fibers are not supported on you system meteor
+  // automatically sets this function to a nope function. We're going to do the
+  // same here as there are small parts of the code that call this function.
+  //
+  'var Meteor = { _noYieldsAllowed:function nope(f) { return f(); }};',
+
+  //
   // EJSON and meteor has a horrible habit of introducing pointless globals
   // a.k.a. writing bad code in general. These variable declarations ensure that
   // we don't have horrible global leaks in our own code.

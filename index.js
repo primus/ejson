@@ -1,5 +1,6 @@
 module.exports = (function () {
 "use strict";
+var Meteor = { _noYieldsAllowed:function nope(f) { return f(); }};
 var EJSON, EJSONTest, i, base64Encode, base64Decode, root = {};
 var _ = require("underscore");
 EJSON = {};
