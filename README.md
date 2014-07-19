@@ -7,7 +7,7 @@
 types as well as
 
 - **Date**: It maintains a date instance instead of transforming it to a string.
-- **Binary**: `Uinit8Array`
+- **Binary**: `Uint8Array`
 - **User defined types**
 
 The `ejson` module is port of Meteor's EJSON parser which has been made
