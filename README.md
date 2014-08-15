@@ -1,7 +1,7 @@
 # ejson
 
-[![Build Status](https://travis-ci.org/primus/EJSON.png)](https://travis-ci.org/primus/EJSON)
-[![NPM version](https://badge.fury.io/js/ejson.png)](http://badge.fury.io/js/ejson)
+[![Build Status](https://travis-ci.org/primus/EJSON.svg)](https://travis-ci.org/primus/EJSON)
+[![NPM version](https://badge.fury.io/js/ejson.svg)](http://badge.fury.io/js/ejson)
 
 `ejson` is an extension of JSON to support more types. It supports all JSON-safe
 types as well as
