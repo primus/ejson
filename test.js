@@ -2,7 +2,7 @@ describe('EJSON', function () {
   'use strict';
 
   var assume = require('assume')
-    , EJSON = require('../');
+    , EJSON = require('./');
 
   it('is keyOrderSensitive', function () {
     assume(EJSON.equals({
