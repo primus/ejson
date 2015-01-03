@@ -4,7 +4,7 @@ describe('EJSON', function () {
   var chai = require('chai')
     , expect = chai.expect;
 
-  chai.Assertion.includeStack = true;
+  chai.config.includeStack = true;
 
   var EJSON = require('../');
 

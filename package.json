@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "node build.js",
-    "test": "npm run prepublish && mocha"
+    "test": "npm run prepublish && mocha --check-leaks"
   },
   "keywords": [
     "EJSON",
