@@ -22,11 +22,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "underscore": "1.5.x"
+    "underscore": "1.7.x"
   },
   "devDependencies": {
-    "mocha": "1.12.x",
-    "chai": "1.7.x",
+    "mocha": "2.1.x",
+    "chai": "1.10.x",
     "pre-commit": "0.0.x"
   }
 }
