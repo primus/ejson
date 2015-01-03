@@ -23,11 +23,11 @@ var source = [
   // a.k.a. writing bad code in general. These variable declarations ensure that
   // we don't have horrible global leaks in our own code.
   //
-  'var EJSON, EJSONTest, i, base64Encode, base64Decode, root = {};',
+  'var EJSON, EJSONTest, i, Base64, root = {};',
 
   'var _ = require("underscore");',
-  fs.readFileSync(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
   fs.readFileSync(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
+  fs.readFileSync(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
 
   '  return EJSON;',
   '}).call(this);'
