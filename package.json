@@ -1,6 +1,6 @@
 {
   "name": "ejson",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserif",
   "main": "index.js",
   "scripts": {
@@ -9,16 +9,17 @@
   },
   "keywords": [
     "EJSON",
-    "JSON",
     "Extended",
     "Extensible",
+    "JSON",
     "Meteor",
+    "ejson",
     "primus"
   ],
   "author": "Arnout Kazemier",
   "repository": {
     "type": "git",
-    "url": "git://github.com/primus/EJSON.git"
+    "url": "git://github.com/primus/ejson.git"
   },
   "license": "MIT",
   "dependencies": {
