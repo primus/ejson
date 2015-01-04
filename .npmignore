@@ -2,5 +2,4 @@ vendor/dl.sh
 .travis.yml
 .npmignore
 .tern-port
-build.js
 test.js
