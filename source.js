@@ -28,7 +28,7 @@ module.exports = [
   // Add the required dependencies and include them as full source so we can
   // re-use this code for Node.js as well as on the client.
   //
-  read(require.resolve('underscore'), 'utf-8').slice(0, -7) + 'root);',
+  read(require.resolve('underscore'), 'utf-8').slice(0, -8) + 'root));',
   'var _ = "undefined" !== typeof exports ? exports._ : root._;',
   read(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
   read(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
