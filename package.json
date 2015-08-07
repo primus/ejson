@@ -26,8 +26,8 @@
     "underscore": "1.7.x"
   },
   "devDependencies": {
-    "assume": "1.1.x",
+    "assume": "1.2.x",
     "mocha": "2.2.x",
-    "pre-commit": "1.0.x"
+    "pre-commit": "1.1.x"
   }
 }
