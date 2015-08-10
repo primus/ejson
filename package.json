@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "underscore": "1.7.x"
+    "underscore": "1.8.x"
   },
   "devDependencies": {
     "assume": "1.2.x",
