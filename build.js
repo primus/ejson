@@ -1,7 +1,8 @@
 'use strict';
 
-var path = require('path')
-  , fs = require('fs');
+var join = require('path').join
+  , fs = require('fs')
+  , read = fs.readFileSync;
 
 //
 // Retrieve the source code of all required assets to compile them the actual
@@ -26,11 +27,12 @@ var source = [
   'var EJSON, EJSONTest, i, Base64, root = {};',
 
   'var _ = require("underscore");',
-  fs.readFileSync(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
-  fs.readFileSync(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/base64.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/ejson.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/stringify.js'), 'utf-8'),
 
   '  return EJSON;',
   '}).call(this);'
 ].join('\n');
 
-fs.writeFileSync(__dirname + '/index.js', source);
+fs.writeFileSync(join(__dirname, 'index.js'), source);

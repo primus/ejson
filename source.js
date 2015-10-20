@@ -1,7 +1,7 @@
 'use strict';
 
 var read = require('fs').readFileSync
-  , path = require('path');
+  , join = require('path').join;
 
 //
 // Expose a custom build which only uses globals instead of browserify.
@@ -30,8 +30,9 @@ module.exports = [
   //
   read(require.resolve('underscore'), 'utf-8').slice(0, -8) + 'root));',
   'var _ = "undefined" !== typeof exports ? exports._ : root._;',
-  read(path.join(__dirname, './vendor/base64.js'), 'utf-8'),
-  read(path.join(__dirname, './vendor/ejson.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/base64.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/ejson.js'), 'utf-8'),
+  read(join(__dirname, 'vendor/stringify.js'), 'utf-8'),
 
   '  return EJSON;',
   '}).call(this);'

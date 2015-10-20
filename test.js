@@ -4,6 +4,10 @@ describe('EJSON', function () {
   var assume = require('assume')
     , EJSON = require('./');
 
+  it('has the `_canonicalStringify` method', function () {
+    assume(EJSON._canonicalStringify).to.be.a('function');
+  });
+
   it('is keyOrderSensitive', function () {
     assume(EJSON.equals({
       a: {b: 1, c: 2},
@@ -56,10 +60,10 @@ describe('EJSON', function () {
   it('equality and falsiness', function () {
     assume(EJSON.equals(null, null)).to.equal(true);
     assume(EJSON.equals(undefined, undefined)).to.equal(true);
-    assume(EJSON.equals({foo: "foo"}, null)).to.equal(false);
-    assume(EJSON.equals(null, {foo: "foo"})).to.equal(false);
-    assume(EJSON.equals(undefined, {foo: "foo"})).to.equal(false);
-    assume(EJSON.equals({foo: "foo"}, undefined)).to.equal(false);
+    assume(EJSON.equals({foo: 'foo'}, null)).to.equal(false);
+    assume(EJSON.equals(null, {foo: 'foo'})).to.equal(false);
+    assume(EJSON.equals(undefined, {foo: 'foo'})).to.equal(false);
+    assume(EJSON.equals({foo: 'foo'}, undefined)).to.equal(false);
   });
 
   it('clones', function () {
@@ -73,16 +77,16 @@ describe('EJSON', function () {
     cloneTest(null, true);
     cloneTest(undefined, true);
     cloneTest(42, true);
-    cloneTest("asdf", true);
+    cloneTest('asdf', true);
     cloneTest([1, 2, 3]);
-    cloneTest([1, "fasdf", {foo: 42}]);
-    cloneTest({x: 42, y: "asdf"});
+    cloneTest([1, 'fasdf', {foo: 42}]);
+    cloneTest({x: 42, y: 'asdf'});
 
     function testCloneArgs(/*arguments*/) {
       var clonedArgs = EJSON.clone(arguments);
-      assume(clonedArgs).to.deep.equal([1, 2, "foo", [4]]);
+      assume(clonedArgs).to.deep.equal([1, 2, 'foo', [4]]);
     }
 
-    testCloneArgs(1, 2, "foo", [4]);
+    testCloneArgs(1, 2, 'foo', [4]);
   });
 });
