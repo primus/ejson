@@ -25,11 +25,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "underscore": "1.8.x"
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "assume": "1.4.x",
+    "assume": "~1.4.1",
     "mocha": "~3.2.0",
-    "pre-commit": "1.1.x"
+    "pre-commit": "~1.1.3"
   }
 }
