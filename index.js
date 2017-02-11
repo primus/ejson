@@ -236,7 +236,6 @@ EJSON.removeType = function(name) {
 /**
  * Allows to remove all custom datatypes from EJSON(useful for testing in
  * --watch mode or by using Wallaby.js.
- * @param  {String} name
  */
 EJSON.removeTypes = function() {
   customTypes = {};
