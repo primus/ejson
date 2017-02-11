@@ -89,4 +89,46 @@ describe('EJSON', function () {
 
     testCloneArgs(1, 2, 'foo', [4]);
   });
+
+  it(`allows to remove custom datatype `, () => {
+    const name = 'MyType';
+    const type = {};
+    EJSON.addType(name, type);
+    assume(EJSON.hasType(name)).to.equal(true);
+    EJSON.removeType(name);
+    assume(EJSON.hasType(name)).to.equal(false);
+  });
+
+  it(`allows to remove all custom datatypes `, () => {
+    EJSON.addType('FirstType', {});
+    EJSON.addType('SecondType', {});
+    assume(EJSON.hasType('FirstType')).to.equal(true);
+    assume(EJSON.hasType('SecondType')).to.equal(true);
+    EJSON.removeTypes();
+    assume(EJSON.getTypes()).to.deep.equal({});
+  });
+
+  it(`returns all custom datatypes `, () => {
+    EJSON.addType('FirstType', {});
+    EJSON.addType('SecondType', {});
+    assume(EJSON.getTypes()).to.deep.equal({
+      'FirstType': {},
+      'SecondType': {}
+    });
+  });
+
+  describe(`evaluation`, () => {
+    afterEach(() => {
+      EJSON.removeTypes();
+    });
+
+    it(`returns true if custom datatype is registered under name `, () => {
+      EJSON.addType('MyType', {});
+      assume(EJSON.hasType('MyType')).to.equal(true);
+    });
+
+    it(`returns true if custom datatype is registered under name `, () => {
+      assume(EJSON.hasType('OtherType')).to.equal(false);
+    });
+  });
 });
