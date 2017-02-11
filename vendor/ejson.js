@@ -109,6 +109,15 @@ EJSON.hasType = function (name) {
 };
 
 /**
+ * Return custom datatype by name.
+ * @param {String} name
+ * @return {Boolean}
+ */
+EJSON.getType = function (name) {
+  return customTypes[name];
+};
+
+/**
  * @alias EJSON._getTypes
  */
 EJSON.getTypes = function () {
