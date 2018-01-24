@@ -308,7 +308,7 @@ var builtinConverters = [
   },
   { // Custom
     matchJSONValue: function (obj) {
-      return _.has(obj, '$type') && _.has(obj, '$value') && _.size(obj) === 2;
+      return _.has(obj, '__type') && _.has(obj, '__value') && _.size(obj) === 2;
     },
     matchObject: function (obj) {
       return EJSON._isCustomType(obj);
@@ -317,15 +317,15 @@ var builtinConverters = [
       var jsonValue = Meteor._noYieldsAllowed(function () {
         return obj.toJSONValue();
       });
-      return {$type: obj.typeName(), $value: jsonValue};
+      return {__type: obj.typeName(), __value: jsonValue};
     },
     fromJSONValue: function (obj) {
-      var typeName = obj.$type;
+      var typeName = obj.__type;
       if (!_.has(customTypes, typeName))
         throw new Error("Custom EJSON type " + typeName + " is not defined");
       var converter = customTypes[typeName];
       return Meteor._noYieldsAllowed(function () {
-        return converter(obj.$value);
+        return converter(obj.__value);
       });
     }
   }
@@ -446,7 +446,7 @@ var fromJSONValueHelper = function (value) {
   if (typeof value === 'object' && value !== null) {
     if (_.size(value) <= 2
         && _.all(value, function (v, k) {
-          return typeof k === 'string' && k.substr(0, 1) === '$';
+          return typeof k === 'string' && (k.substr(0, 1) === '$' || k.substr(0, 2) === '__');
         })) {
       for (var i = 0; i < builtinConverters.length; i++) {
         var converter = builtinConverters[i];

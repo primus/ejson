@@ -4,7 +4,7 @@
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserify",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && mocha --check-leaks test.js",
+    "test": "mocha --check-leaks test.js",
     "prepublish": "npm run build",
     "update": "vendor/dl.sh",
     "build": "node build.js"
