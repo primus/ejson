@@ -281,7 +281,7 @@ var builtinConverters = [
   },
   { // Escaping one level
     matchJSONValue: function (obj) {
-      return _.has(obj, '$escape') && _.size(obj) === 1;
+      return _.has(obj, '__espace') && _.size(obj) === 1;
     },
     matchObject: function (obj) {
       if (_.isEmpty(obj) || _.size(obj) > 2) {
@@ -296,11 +296,11 @@ var builtinConverters = [
       _.each(obj, function (value, key) {
         newObj[key] = EJSON.toJSONValue(value);
       });
-      return {$escape: newObj};
+      return {__espace: newObj};
     },
     fromJSONValue: function (obj) {
       var newObj = {};
-      _.each(obj.$escape, function (value, key) {
+      _.each(obj.__espace, function (value, key) {
         newObj[key] = EJSON.fromJSONValue(value);
       });
       return newObj;
