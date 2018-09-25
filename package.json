@@ -3,6 +3,7 @@
   "version": "2.1.2",
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserify",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "mocha --check-leaks test.js",
     "prepublish": "npm run build",
