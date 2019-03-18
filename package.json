@@ -28,8 +28,8 @@
     "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "assume": "~1.4.1",
-    "mocha": "~3.2.0",
+    "assume": "~2.1.0",
+    "mocha": "~6.0.0",
     "pre-commit": "~1.2.0"
   }
 }
