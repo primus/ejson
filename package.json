@@ -21,7 +21,7 @@
   "author": "Arnout Kazemier",
   "repository": {
     "type": "git",
-    "url": "git://github.com/primus/ejson.git"
+    "url": "git://github.com/Eveble/ejson.git"
   },
   "license": "MIT",
   "dependencies": {
