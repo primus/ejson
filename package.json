@@ -1,6 +1,6 @@
 {
-  "name": "ejson",
-  "version": "2.1.2",
+  "name": "@eveble/ejson",
+  "version": "2.2.0",
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserify",
   "main": "index.js",
   "scripts": {
@@ -21,15 +21,15 @@
   "author": "Arnout Kazemier",
   "repository": {
     "type": "git",
-    "url": "git://github.com/primus/ejson.git"
+    "url": "git://github.com/Eveble/ejson.git"
   },
   "license": "MIT",
   "dependencies": {
     "underscore": "~1.8.3"
   },
   "devDependencies": {
-    "assume": "~1.4.1",
-    "mocha": "~3.2.0",
+    "assume": "~2.1.0",
+    "mocha": "~6.0.0",
     "pre-commit": "~1.2.0"
   }
 }

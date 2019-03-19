@@ -75,6 +75,55 @@ EJSON.addType = function (name, factory) {
   customTypes[name] = factory;
 };
 
+/**
+ * Allows to remove custom datatype from EJSON.
+ * @param  {String} name
+ */
+EJSON.removeType = function(name) {
+  if (_.has(customTypes, name)) {delete customTypes[name];}
+}
+
+/**
+ * Allows to remove all custom datatypes from EJSON(useful for testing in
+ * --watch mode or by using Wallaby.js.
+ */
+EJSON.removeTypes = function() {
+  customTypes = {};
+}
+
+/**
+ * @alias EJSON._isCustomType
+ */
+EJSON.isCustomType = function (obj) {
+  return this._isCustomType(obj);
+};
+
+/**
+ * Evaluates if custom datatype is registered under name.
+ * @param  {String}  name
+ * @return {Boolean}
+ */
+EJSON.hasType = function (name) {
+  return _.has(customTypes, name);
+};
+
+/**
+ * Return custom datatype by name.
+ * @param {String} name
+ * @return {Boolean}
+ */
+EJSON.getType = function (name) {
+  return customTypes[name];
+};
+
+/**
+ * @alias EJSON._getTypes
+ */
+EJSON.getTypes = function () {
+  return this._getTypes();
+};
+
+
 var isInfOrNan = function (obj) {
   return _.isNaN(obj) || obj === Infinity || obj === -Infinity;
 };
