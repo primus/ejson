@@ -76,18 +76,30 @@ EJSON.addType = function (name, factory) {
 };
 
 /**
+ * @summary Override existing custom datatype.
+ * @locus Anywhere
+ * @param {String} name A tag for your custom type; must be unique among custom data types defined in your project, and must match the result of your type's `typeName` method.
+ * @param {Function} factory A function that deserializes a JSON-compatible value into an instance of your type.  This should match the serialization performed by your type's `toJSONValue` method.
+ */
+EJSON.overrideType = function (name, factory) {
+  customTypes[name] = factory;
+};
+
+/**
  * Allows to remove custom datatype from EJSON.
  * @param  {String} name
  */
-EJSON.removeType = function(name) {
-  if (_.has(customTypes, name)) {delete customTypes[name];}
+EJSON.removeType = function (name) {
+  if (_.has(customTypes, name)) {
+    delete customTypes[name];
+  }
 }
 
 /**
  * Allows to remove all custom datatypes from EJSON(useful for testing in
  * --watch mode or by using Wallaby.js.
  */
-EJSON.removeTypes = function() {
+EJSON.removeTypes = function () {
   customTypes = {};
 }
 
@@ -128,8 +140,7 @@ var isInfOrNan = function (obj) {
   return _.isNaN(obj) || obj === Infinity || obj === -Infinity;
 };
 
-var builtinConverters = [
-  { // Date
+var builtinConverters = [{ // Date
     matchJSONValue: function (obj) {
       return _.has(obj, '$date') && _.size(obj) === 1;
     },
@@ -137,7 +148,9 @@ var builtinConverters = [
       return obj instanceof Date;
     },
     toJSONValue: function (obj) {
-      return {$date: obj.getTime()};
+      return {
+        $date: obj.getTime()
+      };
     },
     fromJSONValue: function (obj) {
       return new Date(obj.$date);
@@ -157,10 +170,12 @@ var builtinConverters = [
         sign = 1;
       else
         sign = -1;
-      return {$InfNaN: sign};
+      return {
+        $InfNaN: sign
+      };
     },
     fromJSONValue: function (obj) {
-      return obj.$InfNaN/0;
+      return obj.$InfNaN / 0;
     }
   },
   { // Binary
@@ -168,11 +183,13 @@ var builtinConverters = [
       return _.has(obj, '$binary') && _.size(obj) === 1;
     },
     matchObject: function (obj) {
-      return typeof Uint8Array !== 'undefined' && obj instanceof Uint8Array
-        || (obj && _.has(obj, '$Uint8ArrayPolyfill'));
+      return typeof Uint8Array !== 'undefined' && obj instanceof Uint8Array ||
+        (obj && _.has(obj, '$Uint8ArrayPolyfill'));
     },
     toJSONValue: function (obj) {
-      return {$binary: Base64.encode(obj)};
+      return {
+        $binary: Base64.encode(obj)
+      };
     },
     fromJSONValue: function (obj) {
       return Base64.decode(obj.$binary);
@@ -195,7 +212,9 @@ var builtinConverters = [
       _.each(obj, function (value, key) {
         newObj[key] = EJSON.toJSONValue(value);
       });
-      return {$escape: newObj};
+      return {
+        $escape: newObj
+      };
     },
     fromJSONValue: function (obj) {
       var newObj = {};
@@ -216,7 +235,10 @@ var builtinConverters = [
       var jsonValue = Meteor._noYieldsAllowed(function () {
         return obj.toJSONValue();
       });
-      return {$type: obj.typeName(), $value: jsonValue};
+      return {
+        $type: obj.typeName(),
+        $value: jsonValue
+      };
     },
     fromJSONValue: function (obj) {
       var typeName = obj.$type;
@@ -247,35 +269,35 @@ EJSON._getConverters = function () {
 
 // for both arrays and objects, in-place modification.
 var adjustTypesToJSONValue =
-EJSON._adjustTypesToJSONValue = function (obj) {
-  // Is it an atom that we need to adjust?
-  if (obj === null)
-    return null;
-  var maybeChanged = toJSONValueHelper(obj);
-  if (maybeChanged !== undefined)
-    return maybeChanged;
+  EJSON._adjustTypesToJSONValue = function (obj) {
+    // Is it an atom that we need to adjust?
+    if (obj === null)
+      return null;
+    var maybeChanged = toJSONValueHelper(obj);
+    if (maybeChanged !== undefined)
+      return maybeChanged;
 
-  // Other atoms are unchanged.
-  if (typeof obj !== 'object')
-    return obj;
+    // Other atoms are unchanged.
+    if (typeof obj !== 'object')
+      return obj;
 
-  // Iterate over array or object structure.
-  _.each(obj, function (value, key) {
-    if (typeof value !== 'object' && value !== undefined &&
+    // Iterate over array or object structure.
+    _.each(obj, function (value, key) {
+      if (typeof value !== 'object' && value !== undefined &&
         !isInfOrNan(value))
-      return; // continue
+        return; // continue
 
-    var changed = toJSONValueHelper(value);
-    if (changed) {
-      obj[key] = changed;
-      return; // on to the next key
-    }
-    // if we get here, value is an object but not adjustable
-    // at this level.  recurse.
-    adjustTypesToJSONValue(value);
-  });
-  return obj;
-};
+      var changed = toJSONValueHelper(value);
+      if (changed) {
+        obj[key] = changed;
+        return; // on to the next key
+      }
+      // if we get here, value is an object but not adjustable
+      // at this level.  recurse.
+      adjustTypesToJSONValue(value);
+    });
+    return obj;
+  };
 
 // Either return the JSON-compatible version of the argument, or undefined (if
 // the item isn't itself replaceable, but maybe some fields in it are)
@@ -310,31 +332,31 @@ EJSON.toJSONValue = function (item) {
 // different if the object you hand it itself needs changing.
 //
 var adjustTypesFromJSONValue =
-EJSON._adjustTypesFromJSONValue = function (obj) {
-  if (obj === null)
-    return null;
-  var maybeChanged = fromJSONValueHelper(obj);
-  if (maybeChanged !== obj)
-    return maybeChanged;
+  EJSON._adjustTypesFromJSONValue = function (obj) {
+    if (obj === null)
+      return null;
+    var maybeChanged = fromJSONValueHelper(obj);
+    if (maybeChanged !== obj)
+      return maybeChanged;
 
-  // Other atoms are unchanged.
-  if (typeof obj !== 'object')
-    return obj;
+    // Other atoms are unchanged.
+    if (typeof obj !== 'object')
+      return obj;
 
-  _.each(obj, function (value, key) {
-    if (typeof value === 'object') {
-      var changed = fromJSONValueHelper(value);
-      if (value !== changed) {
-        obj[key] = changed;
-        return;
+    _.each(obj, function (value, key) {
+      if (typeof value === 'object') {
+        var changed = fromJSONValueHelper(value);
+        if (value !== changed) {
+          obj[key] = changed;
+          return;
+        }
+        // if we get here, value is an object but not adjustable
+        // at this level.  recurse.
+        adjustTypesFromJSONValue(value);
       }
-      // if we get here, value is an object but not adjustable
-      // at this level.  recurse.
-      adjustTypesFromJSONValue(value);
-    }
-  });
-  return obj;
-};
+    });
+    return obj;
+  };
 
 // Either return the argument changed to have the non-json
 // rep of itself (the Object version) or the argument itself.
@@ -343,10 +365,10 @@ EJSON._adjustTypesFromJSONValue = function (obj) {
 // EJSON.fromJSONValue
 var fromJSONValueHelper = function (value) {
   if (typeof value === 'object' && value !== null) {
-    if (_.size(value) <= 2
-        && _.all(value, function (v, k) {
-          return typeof k === 'string' && k.substr(0, 1) === '$';
-        })) {
+    if (_.size(value) <= 2 &&
+      _.all(value, function (v, k) {
+        return typeof k === 'string' && k.substr(0, 1) === '$';
+      })) {
       for (var i = 0; i < builtinConverters.length; i++) {
         var converter = builtinConverters[i];
         if (converter.matchJSONValue(value)) {
@@ -429,7 +451,7 @@ EJSON.equals = function (a, b, options) {
     return true;
   if (_.isNaN(a) && _.isNaN(b))
     return true; // This differs from the IEEE spec for NaN equality, b/c we don't want
-                 // anything ever with a NaN to be poisoned from becoming equal to anything.
+  // anything ever with a NaN to be poisoned from becoming equal to anything.
   if (!a || !b) // if either one is falsy, they'd have to be === to be equal
     return false;
   if (!(typeof a === 'object' && typeof b === 'object'))
@@ -462,15 +484,17 @@ EJSON.equals = function (a, b, options) {
   }
   // fallback for custom types that don't implement their own equals
   switch (EJSON._isCustomType(a) + EJSON._isCustomType(b)) {
-    case 1: return false;
-    case 2: return EJSON.equals(EJSON.toJSONValue(a), EJSON.toJSONValue(b));
+    case 1:
+      return false;
+    case 2:
+      return EJSON.equals(EJSON.toJSONValue(a), EJSON.toJSONValue(b));
   }
   // fall back to structural equality of objects
   var ret;
   if (keyOrderSensitive) {
     var bKeys = [];
     _.each(b, function (val, x) {
-        bKeys.push(x);
+      bKeys.push(x);
     });
     i = 0;
     ret = _.all(a, function (val, x) {
