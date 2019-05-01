@@ -4,8 +4,18 @@ describe('EJSON', function () {
   var assume = require('assume')
     , EJSON = require('./');
 
-  it('has the `_canonicalStringify` method', function () {
-    assume(EJSON._canonicalStringify).to.be.a('function');
+  it('honors the canonical option', function () {
+    assume(EJSON.stringify({ b: 2, a: 1 }, { canonical: true })).equals(
+      '{"a":1,"b":2}'
+    );
+  });
+
+  it('supports the Uint8Array type', function () {
+    var obj = { a: new Uint8Array([0]) };
+    var str = '{"a":{"$binary":"AA=="}}';
+
+    assume(EJSON.stringify(obj)).equals(str);
+    assume(EJSON.parse(str)).deep.equal(obj);
   });
 
   it('is keyOrderSensitive', function () {
