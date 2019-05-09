@@ -1,2 +1,4 @@
 node_modules/
-npm-debug.log
+vendor/
+!vendor/download.js
+!vendor/meteor.js

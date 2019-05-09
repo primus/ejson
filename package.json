@@ -4,10 +4,8 @@
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserify",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && mocha --check-leaks test.js",
-    "prepublish": "npm run build",
-    "update": "vendor/dl.sh",
-    "build": "node build.js"
+    "test": "mocha --check-leaks test.js",
+    "update": "node vendor/download.js && webpack"
   },
   "keywords": [
     "EJSON",
@@ -24,12 +22,16 @@
     "url": "git://github.com/primus/ejson.git"
   },
   "license": "MIT",
-  "dependencies": {
-    "underscore": "~1.8.3"
-  },
   "devDependencies": {
+    "@babel/core": "~7.4.3",
+    "@babel/preset-env": "~7.4.3",
     "assume": "~2.2.0",
+    "babel-loader": "~8.0.5",
+    "babel-plugin-add-module-exports": "~1.0.2",
+    "babel-plugin-import-to-require": "~1.0.0",
     "mocha": "~6.1.0",
-    "pre-commit": "~1.2.0"
+    "pre-commit": "~1.2.0",
+    "webpack": "~4.30.0",
+    "webpack-cli": "~3.3.0"
   }
 }

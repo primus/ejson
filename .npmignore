@@ -1,5 +1,4 @@
-vendor/dl.sh
-.travis.yml
-.npmignore
-.tern-port
+vendor/
 test.js
+webpack.config.js
+.*
