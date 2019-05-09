@@ -1,6 +1,6 @@
 # ejson
 
-[![Version npm](http://img.shields.io/npm/v/ejson.svg?style=flat-square)](http://browsenpm.org/package/ejson)[![Build Status](http://img.shields.io/travis/primus/ejson/master.svg?style=flat-square)](https://travis-ci.org/primus/ejson)[![Dependencies](https://img.shields.io/david/primus/ejson.svg?style=flat-square)](https://david-dm.org/primus/ejson)[![Coverage Status](http://img.shields.io/coveralls/primus/ejson/master.svg?style=flat-square)](https://coveralls.io/r/primus/ejson?branch=master)[![IRC channel](http://img.shields.io/badge/IRC-irc.freenode.net%23primus-00a8ff.svg?style=flat-square)](http://webchat.freenode.net/?channels=primus)
+[![Version npm](https://img.shields.io/npm/v/ejson.svg?style=flat-square)](https://www.npmjs.com/package/ejson)[![Build Status](https://img.shields.io/travis/primus/ejson/master.svg?style=flat-square)](https://travis-ci.org/primus/ejson)[![Dependencies](https://img.shields.io/david/primus/ejson.svg?style=flat-square)](https://david-dm.org/primus/ejson)[![Coverage Status](https://img.shields.io/coveralls/primus/ejson/master.svg?style=flat-square)](https://coveralls.io/r/primus/ejson?branch=master)[![IRC channel](https://img.shields.io/badge/IRC-irc.freenode.net%23primus-00a8ff.svg?style=flat-square)](https://webchat.freenode.net/?channels=primus)
 
 `ejson` is an extension of JSON to support more types. It supports all JSON-safe
 types as well as
@@ -10,15 +10,15 @@ types as well as
 - **User defined types**
 
 The `ejson` module is port of Meteor's EJSON parser which has been made
-compatible for Node.js and browsers. This way, other 
+compatible for Node.js and browsers. This way, other
 [real-time libraries](https://github.com/primus/primus) can also make use of
-these extensions. 
+these extensions.
 
 ## Installation
 
 The module is released through npm:
 
-```js
+```
 npm install --save ejson
 ```
 
@@ -39,7 +39,7 @@ And some utility methods:
 - `EJSON.newBinary`
 - `EJSON.equals`
 
-See the [meteor EJSON documentation](http://docs.meteor.com/#ejson) for more
+See the [meteor EJSON documentation](https://docs.meteor.com/#ejson) for more
 detailed information.
 
 ## License
