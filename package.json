@@ -24,7 +24,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "@babel/preset-env": "~7.8.0",
+    "@babel/preset-env": "~7.9.0",
     "assume": "~2.2.0",
     "babel-loader": "~8.1.0",
     "babel-plugin-add-module-exports": "~1.0.2",
