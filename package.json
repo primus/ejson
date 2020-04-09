@@ -26,7 +26,7 @@
     "@babel/core": "~7.8.0",
     "@babel/preset-env": "~7.8.0",
     "assume": "~2.2.0",
-    "babel-loader": "~8.0.5",
+    "babel-loader": "~8.1.0",
     "babel-plugin-add-module-exports": "~1.0.2",
     "babel-plugin-import-to-require": "~1.0.0",
     "mocha": "~7.1.0",
