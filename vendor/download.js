@@ -43,10 +43,12 @@ const baseUrl =
   'https://raw.githubusercontent.com/meteor/meteor/devel/packages';
 
 Promise.all(
-  ['base64.js', 'ejson.js', 'stringify.js'].map(async (file, index) => {
-    const url = `${baseUrl}/${index === 0 ? 'base64' : 'ejson'}/${file}`;
-    await write(join(__dirname, file), await fetch(url));
-  })
+  ['base64.js', 'ejson.js', 'stringify.js', 'utils.js'].map(
+    async (file, index) => {
+      const url = `${baseUrl}/${index === 0 ? 'base64' : 'ejson'}/${file}`;
+      await write(join(__dirname, file), await fetch(url));
+    }
+  )
 ).catch((err) => {
   console.error(err);
   process.exitCode = 1;

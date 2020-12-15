@@ -1,103 +1,20 @@
-var EJSON =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
+var EJSON;EJSON =
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(Base64, Meteor) {
+/* provided dependency */ var Base64 = __webpack_require__(2)["Base64"];
+/* provided dependency */ var Meteor = __webpack_require__(3);
 
-Object.defineProperty(exports, "__esModule", {
+
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
 exports.EJSON = void 0;
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+var _utils = __webpack_require__(1);
 
 /**
  * @namespace
@@ -151,19 +68,7 @@ var EJSON = {}; // Custom type interface definition
  */
 
 exports.EJSON = EJSON;
-var customTypes = {};
-
-var hasOwn = function hasOwn(obj, prop) {
-  return {}.hasOwnProperty.call(obj, prop);
-};
-
-var isArguments = function isArguments(obj) {
-  return obj != null && hasOwn(obj, 'callee');
-};
-
-var isInfOrNan = function isInfOrNan(obj) {
-  return Number.isNaN(obj) || obj === Infinity || obj === -Infinity;
-}; // Add a custom type, using a method of your choice to get to and
+var customTypes = new Map(); // Add a custom type, using a method of your choice to get to and
 // from a basic JSON-able representation.  The factory argument
 // is a function of JSON-able --> your object
 // The type you add must have:
@@ -188,19 +93,18 @@ var isInfOrNan = function isInfOrNan(obj) {
  *                           type's `toJSONValue` method.
  */
 
-
 EJSON.addType = function (name, factory) {
-  if (hasOwn(customTypes, name)) {
+  if (customTypes.has(name)) {
     throw new Error("Type ".concat(name, " already present"));
   }
 
-  customTypes[name] = factory;
+  customTypes.set(name, factory);
 };
 
 var builtinConverters = [{
   // Date
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$date') && Object.keys(obj).length === 1;
+    return (0, _utils.hasOwn)(obj, '$date') && (0, _utils.lengthOf)(obj) === 1;
   },
   matchObject: function matchObject(obj) {
     return obj instanceof Date;
@@ -216,7 +120,7 @@ var builtinConverters = [{
 }, {
   // RegExp
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$regexp') && hasOwn(obj, '$flags') && Object.keys(obj).length === 2;
+    return (0, _utils.hasOwn)(obj, '$regexp') && (0, _utils.hasOwn)(obj, '$flags') && (0, _utils.lengthOf)(obj) === 2;
   },
   matchObject: function matchObject(obj) {
     return obj instanceof RegExp;
@@ -236,9 +140,9 @@ var builtinConverters = [{
   // NaN, Inf, -Inf. (These are the only objects with typeof !== 'object'
   // which we match.)
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$InfNaN') && Object.keys(obj).length === 1;
+    return (0, _utils.hasOwn)(obj, '$InfNaN') && (0, _utils.lengthOf)(obj) === 1;
   },
-  matchObject: isInfOrNan,
+  matchObject: _utils.isInfOrNaN,
   toJSONValue: function toJSONValue(obj) {
     var sign;
 
@@ -260,10 +164,10 @@ var builtinConverters = [{
 }, {
   // Binary
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$binary') && Object.keys(obj).length === 1;
+    return (0, _utils.hasOwn)(obj, '$binary') && (0, _utils.lengthOf)(obj) === 1;
   },
   matchObject: function matchObject(obj) {
-    return typeof Uint8Array !== 'undefined' && obj instanceof Uint8Array || obj && hasOwn(obj, '$Uint8ArrayPolyfill');
+    return typeof Uint8Array !== 'undefined' && obj instanceof Uint8Array || obj && (0, _utils.hasOwn)(obj, '$Uint8ArrayPolyfill');
   },
   toJSONValue: function toJSONValue(obj) {
     return {
@@ -276,13 +180,13 @@ var builtinConverters = [{
 }, {
   // Escaping one level
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$escape') && Object.keys(obj).length === 1;
+    return (0, _utils.hasOwn)(obj, '$escape') && (0, _utils.lengthOf)(obj) === 1;
   },
   matchObject: function matchObject(obj) {
     var match = false;
 
     if (obj) {
-      var keyCount = Object.keys(obj).length;
+      var keyCount = (0, _utils.lengthOf)(obj);
 
       if (keyCount === 1 || keyCount === 2) {
         match = builtinConverters.some(function (converter) {
@@ -295,7 +199,7 @@ var builtinConverters = [{
   },
   toJSONValue: function toJSONValue(obj) {
     var newObj = {};
-    Object.keys(obj).forEach(function (key) {
+    (0, _utils.keysOf)(obj).forEach(function (key) {
       newObj[key] = EJSON.toJSONValue(obj[key]);
     });
     return {
@@ -304,7 +208,7 @@ var builtinConverters = [{
   },
   fromJSONValue: function fromJSONValue(obj) {
     var newObj = {};
-    Object.keys(obj.$escape).forEach(function (key) {
+    (0, _utils.keysOf)(obj.$escape).forEach(function (key) {
       newObj[key] = EJSON.fromJSONValue(obj.$escape[key]);
     });
     return newObj;
@@ -312,7 +216,7 @@ var builtinConverters = [{
 }, {
   // Custom
   matchJSONValue: function matchJSONValue(obj) {
-    return hasOwn(obj, '$type') && hasOwn(obj, '$value') && Object.keys(obj).length === 2;
+    return (0, _utils.hasOwn)(obj, '$type') && (0, _utils.hasOwn)(obj, '$value') && (0, _utils.lengthOf)(obj) === 2;
   },
   matchObject: function matchObject(obj) {
     return EJSON._isCustomType(obj);
@@ -330,11 +234,11 @@ var builtinConverters = [{
   fromJSONValue: function fromJSONValue(obj) {
     var typeName = obj.$type;
 
-    if (!hasOwn(customTypes, typeName)) {
+    if (!customTypes.has(typeName)) {
       throw new Error("Custom EJSON type ".concat(typeName, " is not defined"));
     }
 
-    var converter = customTypes[typeName];
+    var converter = customTypes.get(typeName);
     return Meteor._noYieldsAllowed(function () {
       return converter(obj.$value);
     });
@@ -342,11 +246,12 @@ var builtinConverters = [{
 }];
 
 EJSON._isCustomType = function (obj) {
-  return obj && typeof obj.toJSONValue === 'function' && typeof obj.typeName === 'function' && hasOwn(customTypes, obj.typeName());
+  return obj && (0, _utils.isFunction)(obj.toJSONValue) && (0, _utils.isFunction)(obj.typeName) && customTypes.has(obj.typeName());
 };
 
 EJSON._getTypes = function () {
-  return customTypes;
+  var isOriginal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  return isOriginal ? customTypes : (0, _utils.convertMapToObject)(customTypes);
 };
 
 EJSON._getConverters = function () {
@@ -381,15 +286,15 @@ var adjustTypesToJSONValue = function adjustTypesToJSONValue(obj) {
   } // Other atoms are unchanged.
 
 
-  if (_typeof(obj) !== 'object') {
+  if (!(0, _utils.isObject)(obj)) {
     return obj;
   } // Iterate over array or object structure.
 
 
-  Object.keys(obj).forEach(function (key) {
+  (0, _utils.keysOf)(obj).forEach(function (key) {
     var value = obj[key];
 
-    if (_typeof(value) !== 'object' && value !== undefined && !isInfOrNan(value)) {
+    if (!(0, _utils.isObject)(value) && value !== undefined && !(0, _utils.isInfOrNaN)(value)) {
       return; // continue
     }
 
@@ -424,7 +329,7 @@ EJSON.toJSONValue = function (item) {
 
   var newItem = item;
 
-  if (_typeof(item) === 'object') {
+  if ((0, _utils.isObject)(item)) {
     newItem = EJSON.clone(item);
     adjustTypesToJSONValue(newItem);
   }
@@ -437,8 +342,8 @@ EJSON.toJSONValue = function (item) {
 
 
 var fromJSONValueHelper = function fromJSONValueHelper(value) {
-  if (_typeof(value) === 'object' && value !== null) {
-    var keys = Object.keys(value);
+  if ((0, _utils.isObject)(value) && value !== null) {
+    var keys = (0, _utils.keysOf)(value);
 
     if (keys.length <= 2 && keys.every(function (k) {
       return typeof k === 'string' && k.substr(0, 1) === '$';
@@ -471,14 +376,14 @@ var adjustTypesFromJSONValue = function adjustTypesFromJSONValue(obj) {
   } // Other atoms are unchanged.
 
 
-  if (_typeof(obj) !== 'object') {
+  if (!(0, _utils.isObject)(obj)) {
     return obj;
   }
 
-  Object.keys(obj).forEach(function (key) {
+  (0, _utils.keysOf)(obj).forEach(function (key) {
     var value = obj[key];
 
-    if (_typeof(value) === 'object') {
+    if ((0, _utils.isObject)(value)) {
       var changed = fromJSONValueHelper(value);
 
       if (value !== changed) {
@@ -504,7 +409,7 @@ EJSON._adjustTypesFromJSONValue = adjustTypesFromJSONValue;
 EJSON.fromJSONValue = function (item) {
   var changed = fromJSONValueHelper(item);
 
-  if (changed === item && _typeof(item) === 'object') {
+  if (changed === item && (0, _utils.isObject)(item)) {
     changed = EJSON.clone(item);
     adjustTypesFromJSONValue(changed);
   }
@@ -527,12 +432,12 @@ EJSON.fromJSONValue = function (item) {
  */
 
 
-EJSON.stringify = function (item, options) {
+EJSON.stringify = (0, _utils.handleError)(function (item, options) {
   var serialized;
   var json = EJSON.toJSONValue(item);
 
   if (options && (options.canonical || options.indent)) {
-    var canonicalStringify = __webpack_require__(3);
+    var canonicalStringify = __webpack_require__(4);
 
     serialized = canonicalStringify(json, options);
   } else {
@@ -540,14 +445,13 @@ EJSON.stringify = function (item, options) {
   }
 
   return serialized;
-};
+});
 /**
  * @summary Parse a string into an EJSON value. Throws an error if the string
  *          is not valid EJSON.
  * @locus Anywhere
  * @param {String} str A string to parse into an EJSON value.
  */
-
 
 EJSON.parse = function (item) {
   if (typeof item !== 'string') {
@@ -601,7 +505,7 @@ EJSON.equals = function (a, b, options) {
     return false;
   }
 
-  if (!(_typeof(a) === 'object' && _typeof(b) === 'object')) {
+  if (!((0, _utils.isObject)(a) && (0, _utils.isObject)(b))) {
     return false;
   }
 
@@ -623,11 +527,11 @@ EJSON.equals = function (a, b, options) {
     return true;
   }
 
-  if (typeof a.equals === 'function') {
+  if ((0, _utils.isFunction)(a.equals)) {
     return a.equals(b, options);
   }
 
-  if (typeof b.equals === 'function') {
+  if ((0, _utils.isFunction)(b.equals)) {
     return b.equals(a, options);
   }
 
@@ -663,8 +567,8 @@ EJSON.equals = function (a, b, options) {
 
 
   var ret;
-  var aKeys = Object.keys(a);
-  var bKeys = Object.keys(b);
+  var aKeys = (0, _utils.keysOf)(a);
+  var bKeys = (0, _utils.keysOf)(b);
 
   if (keyOrderSensitive) {
     i = 0;
@@ -687,7 +591,7 @@ EJSON.equals = function (a, b, options) {
   } else {
     i = 0;
     ret = aKeys.every(function (key) {
-      if (!hasOwn(b, key)) {
+      if (!(0, _utils.hasOwn)(b, key)) {
         return false;
       }
 
@@ -712,7 +616,7 @@ EJSON.equals = function (a, b, options) {
 EJSON.clone = function (v) {
   var ret;
 
-  if (_typeof(v) !== 'object') {
+  if (!(0, _utils.isObject)(v)) {
     return v;
   }
 
@@ -741,19 +645,15 @@ EJSON.clone = function (v) {
   }
 
   if (Array.isArray(v)) {
-    return v.map(function (value) {
-      return EJSON.clone(value);
-    });
+    return v.map(EJSON.clone);
   }
 
-  if (isArguments(v)) {
-    return Array.from(v).map(function (value) {
-      return EJSON.clone(value);
-    });
+  if ((0, _utils.isArguments)(v)) {
+    return Array.from(v).map(EJSON.clone);
   } // handle general user-defined typed Objects if they have a clone method
 
 
-  if (typeof v.clone === 'function') {
+  if ((0, _utils.isFunction)(v.clone)) {
     return v.clone();
   } // handle other custom types
 
@@ -764,7 +664,7 @@ EJSON.clone = function (v) {
 
 
   ret = {};
-  Object.keys(v).forEach(function (key) {
+  (0, _utils.keysOf)(v).forEach(function (key) {
     ret[key] = EJSON.clone(v[key]);
   });
   return ret;
@@ -782,18 +682,121 @@ EJSON.clone = function (v) {
 
 
 EJSON.newBinary = Base64.newBinary;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(1)["Base64"], __webpack_require__(2)))
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+/***/ ((__unused_webpack_module, exports) => {
 
 
-Object.defineProperty(exports, "__esModule", {
+
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
+}));
+exports.handleError = exports.checkError = exports.isInfOrNaN = exports.isArguments = exports.convertMapToObject = exports.hasOwn = exports.lengthOf = exports.keysOf = exports.isObject = exports.isFunction = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var isFunction = function isFunction(fn) {
+  return typeof fn === 'function';
+};
+
+exports.isFunction = isFunction;
+
+var isObject = function isObject(fn) {
+  return _typeof(fn) === 'object';
+};
+
+exports.isObject = isObject;
+
+var keysOf = function keysOf(obj) {
+  return Object.keys(obj);
+};
+
+exports.keysOf = keysOf;
+
+var lengthOf = function lengthOf(obj) {
+  return Object.keys(obj).length;
+};
+
+exports.lengthOf = lengthOf;
+
+var hasOwn = function hasOwn(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+};
+
+exports.hasOwn = hasOwn;
+
+var convertMapToObject = function convertMapToObject(map) {
+  return Array.from(map).reduce(function (acc, _ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        value = _ref2[1];
+
+    // reassign to not create new object
+    acc[key] = value;
+    return acc;
+  }, {});
+};
+
+exports.convertMapToObject = convertMapToObject;
+
+var isArguments = function isArguments(obj) {
+  return obj != null && hasOwn(obj, 'callee');
+};
+
+exports.isArguments = isArguments;
+
+var isInfOrNaN = function isInfOrNaN(obj) {
+  return Number.isNaN(obj) || obj === Infinity || obj === -Infinity;
+};
+
+exports.isInfOrNaN = isInfOrNaN;
+var checkError = {
+  maxStack: function maxStack(msgError) {
+    return new RegExp('Maximum call stack size exceeded', 'g').test(msgError);
+  }
+};
+exports.checkError = checkError;
+
+var handleError = function handleError(fn) {
+  return function () {
+    try {
+      return fn.apply(this, arguments);
+    } catch (error) {
+      var isMaxStack = checkError.maxStack(error.message);
+
+      if (isMaxStack) {
+        throw new Error('Converting circular structure to JSON');
+      }
+
+      throw error;
+    }
+  };
+};
+
+exports.handleError = handleError;
+
+/***/ }),
+/* 2 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
 exports.Base64 = void 0;
 // Base 64 encoding
 var BASE_64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -834,21 +837,22 @@ var encode = function encode(array) {
   var b = null;
   var c = null;
   var d = null;
-  array.forEach(function (elm, i) {
-    switch (i % 3) {
+
+  for (var _i2 = 0; _i2 < array.length; _i2++) {
+    switch (_i2 % 3) {
       case 0:
-        a = elm >> 2 & 0x3F;
-        b = (elm & 0x03) << 4;
+        a = array[_i2] >> 2 & 0x3F;
+        b = (array[_i2] & 0x03) << 4;
         break;
 
       case 1:
-        b = b | elm >> 4 & 0xF;
-        c = (elm & 0xF) << 2;
+        b = b | array[_i2] >> 4 & 0xF;
+        c = (array[_i2] & 0xF) << 2;
         break;
 
       case 2:
-        c = c | elm >> 6 & 0x03;
-        d = elm & 0x3F;
+        c = c | array[_i2] >> 6 & 0x03;
+        d = array[_i2] & 0x3F;
         answer.push(getChar(a));
         answer.push(getChar(b));
         answer.push(getChar(c));
@@ -859,7 +863,7 @@ var encode = function encode(array) {
         d = null;
         break;
     }
-  });
+  }
 
   if (a != null) {
     answer.push(getChar(a));
@@ -888,7 +892,7 @@ var newBinary = function newBinary(len) {
   if (typeof Uint8Array === 'undefined' || typeof ArrayBuffer === 'undefined') {
     var ret = [];
 
-    for (var _i2 = 0; _i2 < len; _i2++) {
+    for (var _i3 = 0; _i3 < len; _i3++) {
       ret.push(0);
     }
 
@@ -916,11 +920,11 @@ var decode = function decode(str) {
   var three = null;
   var j = 0;
 
-  for (var _i3 = 0; _i3 < str.length; _i3++) {
-    var c = str.charAt(_i3);
+  for (var _i4 = 0; _i4 < str.length; _i4++) {
+    var c = str.charAt(_i4);
     var v = getVal(c);
 
-    switch (_i3 % 4) {
+    switch (_i4 % 4) {
       case 0:
         if (v < 0) {
           throw new Error('invalid base64 string');
@@ -968,10 +972,9 @@ var Base64 = {
 exports.Base64 = Base64;
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 3 */
+/***/ ((module) => {
 
-"use strict";
 
 
 module.exports = {
@@ -986,18 +989,17 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+/* 4 */
+/***/ ((module, exports) => {
 
 
-Object.defineProperty(exports, "__esModule", {
+
+Object.defineProperty(exports, "__esModule", ({
   value: true
-});
-exports["default"] = void 0;
+}));
+exports.default = void 0;
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 // Based on json2.js from https://github.com/douglascrockford/JSON-js
 //
@@ -1122,8 +1124,39 @@ var canonicalStringify = function canonicalStringify(value, options) {
 };
 
 var _default = canonicalStringify;
-exports["default"] = _default;
+exports.default = _default;
 module.exports = exports.default;
 
 /***/ })
-/******/ ])["EJSON"];
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	// module exports must be returned from runtime so entry inlining is disabled
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })()
+.EJSON;
