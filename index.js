@@ -1,9 +1,9 @@
 module.exports =
-/******/ (() => { // webpackBootstrap
+/******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ([
 /* 0 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /* provided dependency */ var Base64 = __webpack_require__(2)["Base64"];
 /* provided dependency */ var Meteor = __webpack_require__(3);
@@ -685,7 +685,7 @@ EJSON.newBinary = Base64.newBinary;
 
 /***/ }),
 /* 1 */
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 
 
@@ -790,7 +790,7 @@ exports.handleError = handleError;
 
 /***/ }),
 /* 2 */
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 
 
@@ -973,7 +973,7 @@ exports.Base64 = Base64;
 
 /***/ }),
 /* 3 */
-/***/ ((module) => {
+/***/ (function(module) {
 
 
 
@@ -990,7 +990,7 @@ module.exports = {
 
 /***/ }),
 /* 4 */
-/***/ ((module, exports) => {
+/***/ (function(module, exports) {
 
 
 

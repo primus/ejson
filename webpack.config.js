@@ -26,7 +26,8 @@ const config = {
       Base64: [join(__dirname, 'vendor', 'base64.js'), 'Base64'],
       Meteor: join(__dirname, 'vendor', 'meteor.js')
     })
-  ]
+  ],
+  target: 'es5'
 };
 
 module.exports = [
