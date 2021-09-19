@@ -1,10 +1,482 @@
-module.exports =
 /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ([
-/* 0 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/* 0 */,
+/* 1 */
+/***/ (function(__unused_webpack_module, exports) {
 
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.handleError = exports.checkError = exports.isInfOrNaN = exports.isArguments = exports.convertMapToObject = exports.hasOwn = exports.lengthOf = exports.keysOf = exports.isObject = exports.isFunction = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var isFunction = function isFunction(fn) {
+  return typeof fn === 'function';
+};
+
+exports.isFunction = isFunction;
+
+var isObject = function isObject(fn) {
+  return _typeof(fn) === 'object';
+};
+
+exports.isObject = isObject;
+
+var keysOf = function keysOf(obj) {
+  return Object.keys(obj);
+};
+
+exports.keysOf = keysOf;
+
+var lengthOf = function lengthOf(obj) {
+  return Object.keys(obj).length;
+};
+
+exports.lengthOf = lengthOf;
+
+var hasOwn = function hasOwn(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+};
+
+exports.hasOwn = hasOwn;
+
+var convertMapToObject = function convertMapToObject(map) {
+  return Array.from(map).reduce(function (acc, _ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        value = _ref2[1];
+
+    // reassign to not create new object
+    acc[key] = value;
+    return acc;
+  }, {});
+};
+
+exports.convertMapToObject = convertMapToObject;
+
+var isArguments = function isArguments(obj) {
+  return obj != null && hasOwn(obj, 'callee');
+};
+
+exports.isArguments = isArguments;
+
+var isInfOrNaN = function isInfOrNaN(obj) {
+  return Number.isNaN(obj) || obj === Infinity || obj === -Infinity;
+};
+
+exports.isInfOrNaN = isInfOrNaN;
+var checkError = {
+  maxStack: function maxStack(msgError) {
+    return new RegExp('Maximum call stack size exceeded', 'g').test(msgError);
+  }
+};
+exports.checkError = checkError;
+
+var handleError = function handleError(fn) {
+  return function () {
+    try {
+      return fn.apply(this, arguments);
+    } catch (error) {
+      var isMaxStack = checkError.maxStack(error.message);
+
+      if (isMaxStack) {
+        throw new Error('Converting circular structure to JSON');
+      }
+
+      throw error;
+    }
+  };
+};
+
+exports.handleError = handleError;
+
+/***/ }),
+/* 2 */
+/***/ (function(__unused_webpack_module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.Base64 = void 0;
+// Base 64 encoding
+var BASE_64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+var BASE_64_VALS = Object.create(null);
+
+var getChar = function getChar(val) {
+  return BASE_64_CHARS.charAt(val);
+};
+
+var getVal = function getVal(ch) {
+  return ch === '=' ? -1 : BASE_64_VALS[ch];
+};
+
+for (var i = 0; i < BASE_64_CHARS.length; i++) {
+  BASE_64_VALS[getChar(i)] = i;
+}
+
+;
+
+var encode = function encode(array) {
+  if (typeof array === "string") {
+    var str = array;
+    array = newBinary(str.length);
+
+    for (var _i = 0; _i < str.length; _i++) {
+      var ch = str.charCodeAt(_i);
+
+      if (ch > 0xFF) {
+        throw new Error("Not ascii. Base64.encode can only take ascii strings.");
+      }
+
+      array[_i] = ch;
+    }
+  }
+
+  var answer = [];
+  var a = null;
+  var b = null;
+  var c = null;
+  var d = null;
+
+  for (var _i2 = 0; _i2 < array.length; _i2++) {
+    switch (_i2 % 3) {
+      case 0:
+        a = array[_i2] >> 2 & 0x3F;
+        b = (array[_i2] & 0x03) << 4;
+        break;
+
+      case 1:
+        b = b | array[_i2] >> 4 & 0xF;
+        c = (array[_i2] & 0xF) << 2;
+        break;
+
+      case 2:
+        c = c | array[_i2] >> 6 & 0x03;
+        d = array[_i2] & 0x3F;
+        answer.push(getChar(a));
+        answer.push(getChar(b));
+        answer.push(getChar(c));
+        answer.push(getChar(d));
+        a = null;
+        b = null;
+        c = null;
+        d = null;
+        break;
+    }
+  }
+
+  if (a != null) {
+    answer.push(getChar(a));
+    answer.push(getChar(b));
+
+    if (c == null) {
+      answer.push('=');
+    } else {
+      answer.push(getChar(c));
+    }
+
+    if (d == null) {
+      answer.push('=');
+    }
+  }
+
+  return answer.join("");
+}; // XXX This is a weird place for this to live, but it's used both by
+// this package and 'ejson', and we can't put it in 'ejson' without
+// introducing a circular dependency. It should probably be in its own
+// package or as a helper in a package that both 'base64' and 'ejson'
+// use.
+
+
+var newBinary = function newBinary(len) {
+  if (typeof Uint8Array === 'undefined' || typeof ArrayBuffer === 'undefined') {
+    var ret = [];
+
+    for (var _i3 = 0; _i3 < len; _i3++) {
+      ret.push(0);
+    }
+
+    ret.$Uint8ArrayPolyfill = true;
+    return ret;
+  }
+
+  return new Uint8Array(new ArrayBuffer(len));
+};
+
+var decode = function decode(str) {
+  var len = Math.floor(str.length * 3 / 4);
+
+  if (str.charAt(str.length - 1) == '=') {
+    len--;
+
+    if (str.charAt(str.length - 2) == '=') {
+      len--;
+    }
+  }
+
+  var arr = newBinary(len);
+  var one = null;
+  var two = null;
+  var three = null;
+  var j = 0;
+
+  for (var _i4 = 0; _i4 < str.length; _i4++) {
+    var c = str.charAt(_i4);
+    var v = getVal(c);
+
+    switch (_i4 % 4) {
+      case 0:
+        if (v < 0) {
+          throw new Error('invalid base64 string');
+        }
+
+        one = v << 2;
+        break;
+
+      case 1:
+        if (v < 0) {
+          throw new Error('invalid base64 string');
+        }
+
+        one = one | v >> 4;
+        arr[j++] = one;
+        two = (v & 0x0F) << 4;
+        break;
+
+      case 2:
+        if (v >= 0) {
+          two = two | v >> 2;
+          arr[j++] = two;
+          three = (v & 0x03) << 6;
+        }
+
+        break;
+
+      case 3:
+        if (v >= 0) {
+          arr[j++] = three | v;
+        }
+
+        break;
+    }
+  }
+
+  return arr;
+};
+
+var Base64 = {
+  encode: encode,
+  decode: decode,
+  newBinary: newBinary
+};
+exports.Base64 = Base64;
+
+/***/ }),
+/* 3 */
+/***/ (function(module) {
+
+
+
+module.exports = {
+  //
+  // When fibers are not supported on you system Meteor automatically sets this
+  // function to a nope function. We're going to do the same here as there are
+  // small parts of the code that call this function.
+  //
+  _noYieldsAllowed: function _noYieldsAllowed(f) {
+    return f();
+  }
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+// Based on json2.js from https://github.com/douglascrockford/JSON-js
+//
+//    json2.js
+//    2012-10-08
+//
+//    Public Domain.
+//
+//    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+function quote(string) {
+  return JSON.stringify(string);
+}
+
+var str = function str(key, holder, singleIndent, outerIndent, canonical) {
+  var value = holder[key]; // What happens next depends on the value's type.
+
+  switch (_typeof(value)) {
+    case 'string':
+      return quote(value);
+
+    case 'number':
+      // JSON numbers must be finite. Encode non-finite numbers as null.
+      return isFinite(value) ? String(value) : 'null';
+
+    case 'boolean':
+      return String(value);
+    // If the type is 'object', we might be dealing with an object or an array or
+    // null.
+
+    case 'object':
+      {
+        // Due to a specification blunder in ECMAScript, typeof null is 'object',
+        // so watch out for that case.
+        if (!value) {
+          return 'null';
+        } // Make an array to hold the partial results of stringifying this object
+        // value.
+
+
+        var innerIndent = outerIndent + singleIndent;
+        var partial = [];
+        var v; // Is the value an array?
+
+        if (Array.isArray(value) || {}.hasOwnProperty.call(value, 'callee')) {
+          // The value is an array. Stringify every element. Use null as a
+          // placeholder for non-JSON values.
+          var length = value.length;
+
+          for (var i = 0; i < length; i += 1) {
+            partial[i] = str(i, value, singleIndent, innerIndent, canonical) || 'null';
+          } // Join all of the elements together, separated with commas, and wrap
+          // them in brackets.
+
+
+          if (partial.length === 0) {
+            v = '[]';
+          } else if (innerIndent) {
+            v = '[\n' + innerIndent + partial.join(',\n' + innerIndent) + '\n' + outerIndent + ']';
+          } else {
+            v = '[' + partial.join(',') + ']';
+          }
+
+          return v;
+        } // Iterate through all of the keys in the object.
+
+
+        var keys = Object.keys(value);
+
+        if (canonical) {
+          keys = keys.sort();
+        }
+
+        keys.forEach(function (k) {
+          v = str(k, value, singleIndent, innerIndent, canonical);
+
+          if (v) {
+            partial.push(quote(k) + (innerIndent ? ': ' : ':') + v);
+          }
+        }); // Join all of the member texts together, separated with commas,
+        // and wrap them in braces.
+
+        if (partial.length === 0) {
+          v = '{}';
+        } else if (innerIndent) {
+          v = '{\n' + innerIndent + partial.join(',\n' + innerIndent) + '\n' + outerIndent + '}';
+        } else {
+          v = '{' + partial.join(',') + '}';
+        }
+
+        return v;
+      }
+
+    default: // Do nothing
+
+  }
+}; // If the JSON object does not yet have a stringify method, give it one.
+
+
+var canonicalStringify = function canonicalStringify(value, options) {
+  // Make a fake root object containing our value under the key of ''.
+  // Return the result of stringifying the value.
+  var allOptions = Object.assign({
+    indent: '',
+    canonical: false
+  }, options);
+
+  if (allOptions.indent === true) {
+    allOptions.indent = '  ';
+  } else if (typeof allOptions.indent === 'number') {
+    var newIndent = '';
+
+    for (var i = 0; i < allOptions.indent; i++) {
+      newIndent += ' ';
+    }
+
+    allOptions.indent = newIndent;
+  }
+
+  return str('', {
+    '': value
+  }, allOptions.indent, '', allOptions.canonical);
+};
+
+var _default = canonicalStringify;
+exports["default"] = _default;
+module.exports = exports.default;
+
+/***/ })
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
+var exports = __webpack_exports__;
 /* provided dependency */ var Base64 = __webpack_require__(2)["Base64"];
 /* provided dependency */ var Meteor = __webpack_require__(3);
 
@@ -682,481 +1154,7 @@ EJSON.clone = function (v) {
 
 
 EJSON.newBinary = Base64.newBinary;
-
-/***/ }),
-/* 1 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.handleError = exports.checkError = exports.isInfOrNaN = exports.isArguments = exports.convertMapToObject = exports.hasOwn = exports.lengthOf = exports.keysOf = exports.isObject = exports.isFunction = void 0;
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-var isFunction = function isFunction(fn) {
-  return typeof fn === 'function';
-};
-
-exports.isFunction = isFunction;
-
-var isObject = function isObject(fn) {
-  return _typeof(fn) === 'object';
-};
-
-exports.isObject = isObject;
-
-var keysOf = function keysOf(obj) {
-  return Object.keys(obj);
-};
-
-exports.keysOf = keysOf;
-
-var lengthOf = function lengthOf(obj) {
-  return Object.keys(obj).length;
-};
-
-exports.lengthOf = lengthOf;
-
-var hasOwn = function hasOwn(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-};
-
-exports.hasOwn = hasOwn;
-
-var convertMapToObject = function convertMapToObject(map) {
-  return Array.from(map).reduce(function (acc, _ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1];
-
-    // reassign to not create new object
-    acc[key] = value;
-    return acc;
-  }, {});
-};
-
-exports.convertMapToObject = convertMapToObject;
-
-var isArguments = function isArguments(obj) {
-  return obj != null && hasOwn(obj, 'callee');
-};
-
-exports.isArguments = isArguments;
-
-var isInfOrNaN = function isInfOrNaN(obj) {
-  return Number.isNaN(obj) || obj === Infinity || obj === -Infinity;
-};
-
-exports.isInfOrNaN = isInfOrNaN;
-var checkError = {
-  maxStack: function maxStack(msgError) {
-    return new RegExp('Maximum call stack size exceeded', 'g').test(msgError);
-  }
-};
-exports.checkError = checkError;
-
-var handleError = function handleError(fn) {
-  return function () {
-    try {
-      return fn.apply(this, arguments);
-    } catch (error) {
-      var isMaxStack = checkError.maxStack(error.message);
-
-      if (isMaxStack) {
-        throw new Error('Converting circular structure to JSON');
-      }
-
-      throw error;
-    }
-  };
-};
-
-exports.handleError = handleError;
-
-/***/ }),
-/* 2 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Base64 = void 0;
-// Base 64 encoding
-var BASE_64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-var BASE_64_VALS = Object.create(null);
-
-var getChar = function getChar(val) {
-  return BASE_64_CHARS.charAt(val);
-};
-
-var getVal = function getVal(ch) {
-  return ch === '=' ? -1 : BASE_64_VALS[ch];
-};
-
-for (var i = 0; i < BASE_64_CHARS.length; i++) {
-  BASE_64_VALS[getChar(i)] = i;
-}
-
-;
-
-var encode = function encode(array) {
-  if (typeof array === "string") {
-    var str = array;
-    array = newBinary(str.length);
-
-    for (var _i = 0; _i < str.length; _i++) {
-      var ch = str.charCodeAt(_i);
-
-      if (ch > 0xFF) {
-        throw new Error("Not ascii. Base64.encode can only take ascii strings.");
-      }
-
-      array[_i] = ch;
-    }
-  }
-
-  var answer = [];
-  var a = null;
-  var b = null;
-  var c = null;
-  var d = null;
-
-  for (var _i2 = 0; _i2 < array.length; _i2++) {
-    switch (_i2 % 3) {
-      case 0:
-        a = array[_i2] >> 2 & 0x3F;
-        b = (array[_i2] & 0x03) << 4;
-        break;
-
-      case 1:
-        b = b | array[_i2] >> 4 & 0xF;
-        c = (array[_i2] & 0xF) << 2;
-        break;
-
-      case 2:
-        c = c | array[_i2] >> 6 & 0x03;
-        d = array[_i2] & 0x3F;
-        answer.push(getChar(a));
-        answer.push(getChar(b));
-        answer.push(getChar(c));
-        answer.push(getChar(d));
-        a = null;
-        b = null;
-        c = null;
-        d = null;
-        break;
-    }
-  }
-
-  if (a != null) {
-    answer.push(getChar(a));
-    answer.push(getChar(b));
-
-    if (c == null) {
-      answer.push('=');
-    } else {
-      answer.push(getChar(c));
-    }
-
-    if (d == null) {
-      answer.push('=');
-    }
-  }
-
-  return answer.join("");
-}; // XXX This is a weird place for this to live, but it's used both by
-// this package and 'ejson', and we can't put it in 'ejson' without
-// introducing a circular dependency. It should probably be in its own
-// package or as a helper in a package that both 'base64' and 'ejson'
-// use.
-
-
-var newBinary = function newBinary(len) {
-  if (typeof Uint8Array === 'undefined' || typeof ArrayBuffer === 'undefined') {
-    var ret = [];
-
-    for (var _i3 = 0; _i3 < len; _i3++) {
-      ret.push(0);
-    }
-
-    ret.$Uint8ArrayPolyfill = true;
-    return ret;
-  }
-
-  return new Uint8Array(new ArrayBuffer(len));
-};
-
-var decode = function decode(str) {
-  var len = Math.floor(str.length * 3 / 4);
-
-  if (str.charAt(str.length - 1) == '=') {
-    len--;
-
-    if (str.charAt(str.length - 2) == '=') {
-      len--;
-    }
-  }
-
-  var arr = newBinary(len);
-  var one = null;
-  var two = null;
-  var three = null;
-  var j = 0;
-
-  for (var _i4 = 0; _i4 < str.length; _i4++) {
-    var c = str.charAt(_i4);
-    var v = getVal(c);
-
-    switch (_i4 % 4) {
-      case 0:
-        if (v < 0) {
-          throw new Error('invalid base64 string');
-        }
-
-        one = v << 2;
-        break;
-
-      case 1:
-        if (v < 0) {
-          throw new Error('invalid base64 string');
-        }
-
-        one = one | v >> 4;
-        arr[j++] = one;
-        two = (v & 0x0F) << 4;
-        break;
-
-      case 2:
-        if (v >= 0) {
-          two = two | v >> 2;
-          arr[j++] = two;
-          three = (v & 0x03) << 6;
-        }
-
-        break;
-
-      case 3:
-        if (v >= 0) {
-          arr[j++] = three | v;
-        }
-
-        break;
-    }
-  }
-
-  return arr;
-};
-
-var Base64 = {
-  encode: encode,
-  decode: decode,
-  newBinary: newBinary
-};
-exports.Base64 = Base64;
-
-/***/ }),
-/* 3 */
-/***/ (function(module) {
-
-
-
-module.exports = {
-  //
-  // When fibers are not supported on you system Meteor automatically sets this
-  // function to a nope function. We're going to do the same here as there are
-  // small parts of the code that call this function.
-  //
-  _noYieldsAllowed: function _noYieldsAllowed(f) {
-    return f();
-  }
-};
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.default = void 0;
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-// Based on json2.js from https://github.com/douglascrockford/JSON-js
-//
-//    json2.js
-//    2012-10-08
-//
-//    Public Domain.
-//
-//    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-function quote(string) {
-  return JSON.stringify(string);
-}
-
-var str = function str(key, holder, singleIndent, outerIndent, canonical) {
-  var value = holder[key]; // What happens next depends on the value's type.
-
-  switch (_typeof(value)) {
-    case 'string':
-      return quote(value);
-
-    case 'number':
-      // JSON numbers must be finite. Encode non-finite numbers as null.
-      return isFinite(value) ? String(value) : 'null';
-
-    case 'boolean':
-      return String(value);
-    // If the type is 'object', we might be dealing with an object or an array or
-    // null.
-
-    case 'object':
-      {
-        // Due to a specification blunder in ECMAScript, typeof null is 'object',
-        // so watch out for that case.
-        if (!value) {
-          return 'null';
-        } // Make an array to hold the partial results of stringifying this object
-        // value.
-
-
-        var innerIndent = outerIndent + singleIndent;
-        var partial = [];
-        var v; // Is the value an array?
-
-        if (Array.isArray(value) || {}.hasOwnProperty.call(value, 'callee')) {
-          // The value is an array. Stringify every element. Use null as a
-          // placeholder for non-JSON values.
-          var length = value.length;
-
-          for (var i = 0; i < length; i += 1) {
-            partial[i] = str(i, value, singleIndent, innerIndent, canonical) || 'null';
-          } // Join all of the elements together, separated with commas, and wrap
-          // them in brackets.
-
-
-          if (partial.length === 0) {
-            v = '[]';
-          } else if (innerIndent) {
-            v = '[\n' + innerIndent + partial.join(',\n' + innerIndent) + '\n' + outerIndent + ']';
-          } else {
-            v = '[' + partial.join(',') + ']';
-          }
-
-          return v;
-        } // Iterate through all of the keys in the object.
-
-
-        var keys = Object.keys(value);
-
-        if (canonical) {
-          keys = keys.sort();
-        }
-
-        keys.forEach(function (k) {
-          v = str(k, value, singleIndent, innerIndent, canonical);
-
-          if (v) {
-            partial.push(quote(k) + (innerIndent ? ': ' : ':') + v);
-          }
-        }); // Join all of the member texts together, separated with commas,
-        // and wrap them in braces.
-
-        if (partial.length === 0) {
-          v = '{}';
-        } else if (innerIndent) {
-          v = '{\n' + innerIndent + partial.join(',\n' + innerIndent) + '\n' + outerIndent + '}';
-        } else {
-          v = '{' + partial.join(',') + '}';
-        }
-
-        return v;
-      }
-
-    default: // Do nothing
-
-  }
-}; // If the JSON object does not yet have a stringify method, give it one.
-
-
-var canonicalStringify = function canonicalStringify(value, options) {
-  // Make a fake root object containing our value under the key of ''.
-  // Return the result of stringifying the value.
-  var allOptions = Object.assign({
-    indent: '',
-    canonical: false
-  }, options);
-
-  if (allOptions.indent === true) {
-    allOptions.indent = '  ';
-  } else if (typeof allOptions.indent === 'number') {
-    var newIndent = '';
-
-    for (var i = 0; i < allOptions.indent; i++) {
-      newIndent += ' ';
-    }
-
-    allOptions.indent = newIndent;
-  }
-
-  return str('', {
-    '': value
-  }, allOptions.indent, '', allOptions.canonical);
-};
-
-var _default = canonicalStringify;
-exports.default = _default;
-module.exports = exports.default;
-
-/***/ })
-/******/ 	]);
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
+}();
+module.exports = __webpack_exports__.EJSON;
 /******/ })()
-.EJSON;
+;
