@@ -27,7 +27,7 @@ const config = {
       Meteor: join(__dirname, 'vendor', 'meteor.js')
     })
   ],
-  target: 'es5'
+  target: ['web', 'es5']
 };
 
 module.exports = [
