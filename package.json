@@ -1,6 +1,6 @@
 {
   "name": "ejson",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "EJSON - Extended and Extensible JSON library from Meteor made compatible for Nodejs and Browserify",
   "main": "index.js",
   "scripts": {
