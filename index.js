@@ -10,7 +10,7 @@
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.handleError = exports.checkError = exports.isInfOrNaN = exports.isArguments = exports.convertMapToObject = exports.hasOwn = exports.lengthOf = exports.keysOf = exports.isObject = exports.isFunction = void 0;
+exports.lengthOf = exports.keysOf = exports.isObject = exports.isInfOrNaN = exports.isFunction = exports.isArguments = exports.hasOwn = exports.handleError = exports.convertMapToObject = exports.checkError = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -24,7 +24,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 var isFunction = function isFunction(fn) {
   return typeof fn === 'function';
@@ -317,7 +317,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = void 0;
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 // Based on json2.js from https://github.com/douglascrockford/JSON-js
 //
@@ -1005,13 +1005,17 @@ EJSON.equals = function (a, b, options) {
 
   if ((0, _utils.isFunction)(b.equals)) {
     return b.equals(a, options);
+  } // Array.isArray works across iframes while instanceof won't
+
+
+  var aIsArray = Array.isArray(a);
+  var bIsArray = Array.isArray(b); // if not both or none are array they are not equal
+
+  if (aIsArray !== bIsArray) {
+    return false;
   }
 
-  if (a instanceof Array) {
-    if (!(b instanceof Array)) {
-      return false;
-    }
-
+  if (aIsArray && bIsArray) {
     if (a.length !== b.length) {
       return false;
     }
