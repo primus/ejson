@@ -1,6 +1,6 @@
 # ejson
 
-[![Version npm](https://img.shields.io/npm/v/ejson.svg?style=flat-square)](https://www.npmjs.com/package/ejson)[![CI](https://img.shields.io/github/actions/workflow/status/primus/ejson/ci.yml?branch=master&label=CI&style=flat-square)](https://github.com/primus/ejson/actions?query=workflow%3ACI+branch%3Amaster)[![Coverage Status](https://img.shields.io/coveralls/primus/ejson/master.svg?style=flat-square)](https://coveralls.io/r/primus/ejson?branch=master)[![IRC channel](https://img.shields.io/badge/IRC-irc.freenode.net%23primus-00a8ff.svg?style=flat-square)](https://webchat.freenode.net/?channels=primus)
+[![Version npm](https://img.shields.io/npm/v/ejson.svg?style=flat-square)](https://www.npmjs.com/package/ejson)[![CI](https://img.shields.io/github/actions/workflow/status/primus/ejson/ci.yml?branch=master&label=CI&style=flat-square)](https://github.com/primus/ejson/actions?query=workflow%3ACI+branch%3Amaster)[![Coverage Status](https://img.shields.io/coveralls/primus/ejson/master.svg?style=flat-square)](https://coveralls.io/r/primus/ejson?branch=master)
 
 `ejson` is an extension of JSON to support more types. It supports all JSON-safe
 types as well as
